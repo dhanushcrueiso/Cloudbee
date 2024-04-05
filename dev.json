@@ -1,0 +1,10 @@
+{
+    "env": "dev",
+    "app_name": "cloudbee",
+    "database_url": "postgresql://postgres:postgres@localhost:5432/blog_posts?sslmode=disable",
+    "max_db_conn": 5,
+    "log_level": "DEBUG",
+    "token_len": 256,
+    "token_expiry": 7776000,
+    "service_token": "servicetoken"
+  }
