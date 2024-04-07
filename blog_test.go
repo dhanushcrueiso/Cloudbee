@@ -88,3 +88,39 @@ func InitialiseDB() {
 		MaxDBConn: cnf.MaxDBConn,
 	})
 }
+
+func TestPostService_UpdatePost(t *testing.T) {
+
+	InitialiseDB()
+	// Initialize a new instance of PostService with the mock database
+	service := services.NewPostService()
+
+	// Define a mock post object with updated details
+	mockPost := &protos.Post{
+		PostId:          "2f4509f4-0f31-4028-b9b8-46b676dfe07c",
+		Title:           "Updated Test Post",
+		Content:         "This is an updated test post.",
+		Author:          "Updated Test Author",
+		PublicationDate: timestamppb.Now(),
+		Tags:            []string{"check", "updated"},
+	}
+
+	// Create a request object with the mock post and its ID
+	req := &protos.UpdatePostRequest{
+		PostId:         mockPost.PostId,
+		NewPostDetails: mockPost,
+	}
+
+	// Call the UpdatePost method
+	res, err := service.UpdatePost(context.Background(), req)
+	if err != nil {
+		t.Errorf("Failed to update post: %v", err)
+	}
+
+	// Verify that the response contains the updated post details
+	if res.UpdatedPostDetails == nil {
+		t.Error("Response does not contain the updated post details")
+	}
+
+	fmt.Println(res)
+}
